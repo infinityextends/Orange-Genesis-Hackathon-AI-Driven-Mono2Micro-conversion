@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Cart</h1>
+    <ul>
+        {% for item in cart %}
+            <li>{{ item.name }} - Quantity: {{ item.quantity }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

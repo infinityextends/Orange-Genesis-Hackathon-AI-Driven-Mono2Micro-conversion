@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Order</title>
+</head>
+<body>
+    <h1>Create Order</h1>
+    <form action="/orders/" method="post">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" value="testuser"><br><br>
+
+        <label for="item_ids">Item IDs (comma-separated):</label><br>
+        <input type="text" id="item_ids" name="item_ids" value="1,2,3"><br><br>
+
+        <label for="quantity">Quantities (comma-separated):</label><br>
+        <input type="text" id="quantity" name="quantity" value="1,2,1"><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+    <br>
+    <a href="/">Back to Home</a>
+</body>
+</html>

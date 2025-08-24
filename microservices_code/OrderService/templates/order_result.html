@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Result</title>
+</head>
+<body>
+    <h1>Order Result</h1>
+    <p>{{ result }}</p>
+    <br>
+    <a href="/">Back to Home</a>
+</body>
+</html>
+
+**Explanation:**
+
+1.  **`requirements.txt`**: Lists the dependencies: `fastapi`, `uvicorn`, `pydantic` and `jinja2`.
+2.  **`app.py`**:
+    *   Defines the FastAPI app instance.
+    *   Includes routes for:
+        *   `/orders/` (POST):  Creates a new order. It takes username, item_ids and quantities as form inputs. It splits the comma-separated lists, and calls the `create_order` service function.
+        *   `/orders/` (GET): Lists all orders.
+        *   `/orders/{orderId}` (GET): Retrieves an order by ID.
+        *   `/orders/users/{username}` (GET): Retrieves orders for a user.
+        *   `/ui/orders/` (GET): Serves the form to create a new order.
+        *   `/` (GET): root to display available endpoints.
+    *   Uses `Depends` for a mock `get_current_user` dependency, simulating authentication.  **Important:**  Replace this with a real authentication mechanism in a production environment.
+    *   Includes basic error handling (e.g., `HTTPException` for "Order not found").
+    *   Uses Jinja2 templates to render HTML responses.
+3.  **`orders/models.py`**:
+    *   Defines the data models using Pydantic: `LineItem` and `Order`.
+4.  **`orders/service.py`**:
+    *   Contains the business logic for order management.
+    *   `create_order`: Creates a new order, mocking interaction with CatalogService to get item prices.
+    *   `get_order_by_id`, `get_orders_by_username`, `get_all_orders`: Retrieval functions.
+    *   `validate_order`, `process_payment`, `schedule_shipping`: Placeholder functions representing interactions with other services.
+    *   Uses a mock `orders_db` dictionary as an in-memory database.  **Important:**  Replace this with a real database (e.g., PostgreSQL, MySQL) and an ORM (e.g., SQLAlchemy) in a production environment.
+5.  **`templates/index.html`**:
+    *   A basic HTML template for the root page, with links to create order and api documentation.
+6.  **`templates/create_order.html`**:
+    *   An HTML form for creating a new order. It includes fields for username, item IDs, and quantities. The item IDs and quantities are comma-separated to allow creating orders with multiple items.
+7.  **`templates/order_result.html`**:
+    *   An HTML template to display the result of order creation or other operations.
+
+**To Run:**
+
+1.  Save the code into the appropriate files and directories (create the `orders` and `templates` directories).
+2.  Create a virtual environment:  `python -m venv venv`
+3.  Activate the virtual environment:
+    *   On Windows: `venv\Scripts\activate`
+    *   On macOS/Linux: `source venv/bin/activate`
+4.  Install dependencies:  `pip install -r requirements.txt`
+5.  Run the application:  `uvicorn app:app --reload`
+6.  Open your browser and navigate to `http://localhost:8000/` to see the UI. You can also access the API documentation at `http://localhost:8000/docs`.
+7.  Click the "Create New Order" link to go to the order creation form.
+8.  Fill in the form and submit it to create a new order. The result will be displayed on the "Order Result" page.
+
+**Important Considerations:**
+
+*   **Database Integration:**  Replace the in-memory `orders_db` with a real database and ORM.
+*   **Authentication:**  Implement a proper authentication system.
+*   **Service Discovery:**  In a microservices architecture, use service discovery (e.g., Consul, etcd) to locate and communicate with other services (CatalogService, AccountService).
+*   **Error Handling:**  Implement more robust error handling and logging.
+*   **Input Validation:**  Add more comprehensive input validation to prevent invalid data from being processed.
+*   **Testing:**  Write unit and integration tests to ensure the service is working correctly.
+*   **Asynchronous Operations:**  For long-running operations (e.g., payment processing, shipping scheduling), use asynchronous tasks (e.g., Celery, Redis Queue) to avoid blocking the main thread.
+*   **Security:**  Implement security best practices, such as input sanitization, output encoding, and protection against common web vulnerabilities.
+*   **Idempotency:** Ensure that operations are idempotent (i.e., performing the same operation multiple times has the same effect as performing it once) to handle potential failures.
+*   **API Versioning:** Use API versioning to allow for future changes without breaking existing clients.
+*   **Monitoring:** Implement monitoring and alerting to track the health and performance of the service.

@@ -1,0 +1,100 @@
+body {
+    font-family: sans-serif;
+    margin: 20px;
+}
+
+h1, h2 {
+    margin-bottom: 10px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 200px;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3e8e41;
+}
+
+#cart-details {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+
+**Explanation and How to Run:**
+
+1.  **`app.py`**:
+    *   Defines the FastAPI application.
+    *   Includes data models (`CartItem`, `Cart`).
+    *   Uses an in-memory `carts` dictionary for cart storage.  **Important:**  This is NOT suitable for production. You'd replace this with a database.
+    *   Implements placeholder functions for the core responsibilities: `calculate_cart_total`, `add_item_to_cart`, `remove_item_from_cart`, `update_item_quantity`, and `get_cart`.  These currently have minimal logic but provide a structure to build upon.  The `get_catalog_item` function acts as a placeholder that interacts with the `CatalogService`. Replace the mock implementation with a real interaction with your `CatalogService`. I added in an example interaction.
+    *   Defines REST endpoints using FastAPI's decorators (`@app.get`, `@app.post`, `@app.delete`, `@app.put`).
+    *   Error handling:  Includes basic error handling (e.g., raising `HTTPException` for "not found" scenarios).
+    *  UI integration with `templates` and `static` folders:  Configures Jinja2 templating engine and serves static files.
+
+2.  **`requirements.txt`**: Lists the dependencies: `fastapi`, `uvicorn`, `pydantic`, `Jinja2`, and `python-multipart` (required for form data).
+
+3. **`templates/index.html`**: A basic HTML file to represent the UI
+
+4. **`static/style.css`**: A basic CSS file to style the UI
+
+**To run the application:**
+
+1.  **Create the directories and files:** Create the folder structure where `app.py` sits. Create the `templates` and `static` directories and populate them with their files.
+
+2.  **Install dependencies:**
+
+    pip install -r requirements.txt
+
+3.  **Run the application:**
+
+    uvicorn app:app --reload
+
+    This will start the FastAPI server.  The `--reload` flag enables automatic reloading when you change the code, which is helpful during development.
+
+4.  **Access the UI:**
+    Open your web browser and navigate to `http://127.0.0.1:8000/`.  You should see the basic UI.
+
+5. **Test the API endpoints:** You can test them using tools like `curl`, `Postman`, or directly through the provided HTML UI.
+
+**Important Considerations and Next Steps:**
+
+*   **Database Integration:**  Replace the in-memory `carts` storage with a proper database (e.g., PostgreSQL, MySQL, MongoDB).  Use an ORM or database library (e.g., SQLAlchemy, Motor) to interact with the database.
+*   **Catalog Service Interaction:** Implement the real interaction with the `CatalogService` in the `get_catalog_item` function.
+*   **Error Handling:** Improve error handling (e.g., logging, more specific error messages).
+*   **Authentication/Authorization:** Add authentication and authorization to secure the API endpoints.
+*   **Validation:**  Add more robust input validation.  Pydantic models provide a good starting point, but you might need custom validation logic.
+*   **Testing:** Write unit tests and integration tests.  Use a testing framework like `pytest`.
+*   **Asynchronous Operations:** Consider using `async` and `await` throughout your code to improve performance if your database or other dependencies support asynchronous operations.
+*   **Deployment:**  Prepare the application for deployment (e.g., using Docker, a cloud platform like AWS, Google Cloud, or Azure).
+*  **UI enhancements:** Add better UI logic to manage the responses and error handling from the microservice.

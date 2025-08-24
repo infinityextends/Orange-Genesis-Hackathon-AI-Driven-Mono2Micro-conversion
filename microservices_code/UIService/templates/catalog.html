@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Catalog</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Catalog</h1>
+    <ul>
+        {% for item in catalog %}
+            <li>{{ item.name }} - {{ item.description }} - ${{ item.price }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
